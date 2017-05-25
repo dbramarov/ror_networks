@@ -1,0 +1,16 @@
+<form style="display: inline-block;" action="/users/logout" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Log Out">
+</form>
+
+<form style="display: inline-block;" action="/professional_profile" method="get">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="My Profile">
+</form>
+
+<hr>
+
+<h1><%= @user.name %></h1>
+
+<p><%= @user.description %></p>

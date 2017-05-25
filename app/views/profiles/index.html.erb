@@ -1,0 +1,44 @@
+<h1>Welcome, <%= @user.name %>!</h1>
+
+<form style="display: inline-block;" action="/users/logout" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Log Out">
+</form>
+
+<form style="display: inline-block;" action="/users" method="get">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="All Users">
+</form>
+
+<hr>
+
+<h3>Here is your profile description:</h3>
+<div style="border:1px solid black; padding: 10px; width: 300px;overflow: scroll; overflow-x: hidden;">
+	<%= @user.description %>
+</div>
+
+<h3>Your Professional Network:</h3>
+<div style="border:1px solid black; padding: 10px; width: 300px;overflow: scroll; overflow-x: hidden;">
+	<% @networks.each do |network| %>
+		<p><a href="/users/<%=network.user_id%>"><%=network.user.name%></a></p>
+	<%end%>
+</div>
+
+<h3>Invitations:</h3>
+<p>The following people asked you to be in their network:</p>
+
+	<table>
+        <tr>
+           <th>Name</th>
+           <th>Action</th>
+       </tr>
+        <% if @invitations %>
+        	<% @invitations.each do |invitation| %>
+        <tr>
+           <th><a href="/users/<%=invitation.user_id%>"><%=invitation.user.name%></a></th>
+           <th><a href="/networks/<%=invitation.user_id%>/create/<%=invitation.id%>" data-method="post">Accept Invite</a> | <a href="/invitations/<%=invitation.user_id%>/destroy" data-method="delete">Ignore</a></th>
+       </tr>
+       <% end %>
+       <% end %>
+    </table>

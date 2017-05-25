@@ -1,0 +1,40 @@
+<form style="display: inline-block;" action="/users/logout" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Log Out">
+</form>
+
+<form style="display: inline-block;" action="/professional_profile" method="get">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="submit" value="My Profile">
+</form>
+
+<hr>
+
+	<% if flash[:success] %>
+	  	<p style="color: green;"><%= flash[:success] %></p>	
+	<% end %>
+
+<h1>Users you may want to connect with:</h1>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Action</th>
+	</tr>
+	<% if @users %>
+		<% @users.each do |user| %>		
+			<% if user != @user %>
+
+				<tr>
+					<th><a href="/users/<%=user.id%>"><%= user.name %></a></th>				
+					<th><a href="/invitations/<%=user.id%>/create" data-method="post">Connect</a></th>
+				</tr>
+
+			<% end %>
+		<% end %>
+	<% end %>
+</table>
+
+
+
